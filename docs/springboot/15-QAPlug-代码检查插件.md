@@ -1,0 +1,151 @@
+# QAPlug-代码检查插件
+
+QAPlug是一系列代码检查插件。
+
+- QAPlug - FindBugs
+
+`FindBug` 是一款开源的 `Java` 代码检查工具,遵循 `GNU` 公共许可协议。它可以检查 `Java` 类或者 `JAR` 文件,运行的是 `Java` 字节码而不是源码,检查原理是:将字节码与一组缺陷模式进行对比来发现可能存在的问题,这些问题包括空指针引用、无限递归循环、死锁等。
+
+具体规则配置参考[FindBugs Bug Descriptions](http://findbugs.sourceforge.net/bugDescriptions.html)
+
+样例：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <Match>
+    <!--QAPlug severity=major-->
+    <Bug pattern="AM_CREATES_EMPTY_JAR_FILE_ENTRY" />
+  </Match>
+</FindBugsFilter>
+```
+
+- QAPlug - CheckStyle
+
+代码样式风格检查，专门检查代码规范风格的，比如缩进，换行操作，命名。每个人都有自己的style，导致整个项目的代码不仅存在不符合语言规范的情况，而且读起来非常困难。因此，这样的项目中都会引入Checkstyle，来规范大家的编码风格，尽量做到统一和合理。
+
+具体规则配置参考[checkstyle – Checks (sourceforge.io)](https://checkstyle.sourceforge.io/checks.html)
+
+样例：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name = "Checker">
+  <property name="charset" value="UTF-8"/>
+  <property name="severity" value="warning"/>
+  <property name="severity" value="warning" />
+  <property name="localeCountry" value="CN" />
+  <property name="localeLanguage" value="zh" />
+  <property name="charset" value="UTF-8" />
+  <property name="fileExtensions" value="java" />
+  <property name="tabWidth" value="2" />
+  <module name="LineLength">
+    <metadata name="net.sf.eclipsecs.core.comment" value="检查每行长度, 每行长度不得超过150。"/>
+    <property name="ignorePattern" value="^package.*|^import.*|a href|href|http://|https://|ftp://" />
+    <property name="max" value="150"/>
+    <property name="tabWidth" value="2" />
+  </module>
+  <module name="FileLength">
+    <property name="severity" value="error"/>
+    <property name="max" value="1000"/>
+  </module>
+</module>
+```
+
+
+
+- QAPlug - PMD
+
+PMD是一款采用BSD协议发布的Java程序代码检查工具。该工具可以做到检查Java代码中是否含有未使用的变量、是否含有空的抓取块、是否含有不必要的对象等。该软件功能强大，扫描效率高，是Java程序员debug的好帮手。
+
+具体规则配置参考[Java Rules PMD Source Code Analyzer](https://pmd.github.io/pmd-6.32.0/pmd_rules_java.html)
+
+样例：
+
+```xml
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="rules" xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+  <description>PMD rules</description>
+
+  <rule ref="rulesets/java/basic.xml">
+    <exclude name="AvoidUsingHardCodedIP"/>
+    <!--flaw/buggy rules-->
+    <exclude name="CheckResultSet"/>
+  </rule>
+ </ruleset>
+```
+
+
+
+- QAPlug
+
+这个插件是汇集这前面说的3个插件的结果，不用每次都运行3个插件分别排错，一键运行3个，同时汇总整合，非常方便。
+
+## 1.安装方式
+
+File – Settings ，选择Plugins,搜索QA,点击Install plugin 进行安装，共需要安装4个插件，QAPlug, QAPlug-Checkstyle, QAPlug-FindBugs, QAPlug-PMD 安装完成后重启即可
+
+![QAPlug](images\QAPlug.png)
+
+## 2.导入自定义profile
+
+除了默认配置外，还可以新建，导入和导出自定义配置。
+
+file->Settings ->QAPlug->Coding Rules-> add
+
+ ![import-profile](images\QAPlug-importProfile.png)
+
+## 3.分析代码
+
+右键项目选择Analyze –》Analyze Code, 可选择分析范围和配置文件。
+
+![Analyze](images\Analyze-Code.png)
+
+ ![Analysis-scope](images\Specify-Analysis-Scope.png)
+
+##	4.代码分析结果
+
+此工具主要能找到代码质量5个方向问题：
+
+1）efficient(性能问题)
+
+2）maintainability（可维护性）
+
+3）portability（可移植性）
+
+4）reliability(可靠性)
+
+5）usability(可用性)
+
+![Analysis-results](images\Ananlysis-results.png)
+
+## 其他问题
+
+### 编译项目报异常：Malformed argument has embedded quote
+
+添加代码审查工具 findbugs后，本来项目正常，但是安装后，重新编译项目报
+
+Malformed argument has embedded quote
+
+查找后按以下方法可以编译正常
+
+在Help 中选择 Edit Custom VM Options
+配置内容里添加一行
+
+```
+-Djdk.lang.Process.allowAmbiguousCommands=true
+```
+
+之后重启 IDEA，问题就能解决。
+
+[返回目录](https://zph-programmer.github.io)
+
+* [上一篇 ——API接口设计规范](14-API接口设计规范.md)
+
+* [下一篇 ——无](）
