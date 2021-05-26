@@ -74,18 +74,18 @@ scp -r XXX@172.16.252.32:/user/XXX/ /home/XXX
 
 
 inux 远程拷贝 ：scp
- 
+
 scp 文件名  root@远程ip:/路径/ 
- 
+
 将本地home目录下的test.tar的文件拷贝到远程主机192.168.1.23的/home/adm/目录下，则命令为：scp /home/test.tar root@192.168.1.23:/home/adm/  回车后输入密码就可以了 
- 
+
 scp提供了几个选项  在scp后加就行了 
- 
+
     -p 拷贝文件的时候保留源文件建立的时间。 
     -q 执行文件拷贝时，不显示任何提示消息。 
     -r 拷贝整个目录   [www.2cto.com](http://www.2cto.com/)  
     -v 拷贝文件时，显示提示信息。 
- 
+
 
 
 Linux 下scp传文件时错误 scp: /usr/tools: not a regular file 不能成功传送 解决方案
@@ -119,6 +119,8 @@ scp -r root@192.168.16.5:/usr/tools/xxxx
 
 
 
+## Linux中zip压缩和unzip解压缩命令详解
+
 liunx 文件操作命令
 
 这里不仅仅指的是普通文件，也包括目录等文件
@@ -144,3 +146,47 @@ t a i l ：显示文件的最后几行
 chmod：改变文件或目录的许可权限
 chown：改变文件的所有权
 chgrp：改变用户分组
+
+
+
+
+
+1、把/home目录下面的mydata目录压缩为mydata.zip
+ zip -r mydata.zip mydata #压缩mydata目录
+ 2、把/home目录下面的mydata.zip解压到mydatabak目录里面
+ unzip mydata.zip -d mydatabak
+ 3、把/home目录下面的abc文件夹和123.txt压缩成为abc123.zip
+ zip -r abc123.zip abc 123.txt
+ 4、把/home目录下面的wwwroot.zip直接解压到/home目录里面
+ unzip wwwroot.zip
+ 5、把/home目录下面的abc12.zip、abc23.zip、abc34.zip同时解压到/home目录里面
+ unzip abc\*.zip
+ 6、查看把/home目录下面的wwwroot.zip里面的内容
+ unzip -v wwwroot.zip
+ 7、验证/home目录下面的wwwroot.zip是否完整
+ unzip -t wwwroot.zip
+ 8、把/home目录下面wwwroot.zip里面的所有文件解压到第一级目录
+ unzip -j wwwroot.zip
+
+主要参数
+
+-c：将解压缩的结果
+ -l：显示压缩文件内所包含的文件
+ -p：与-c参数类似，会将解压缩的结果显示到屏幕上，但不会执行任何的转换
+ -t：检查压缩文件是否正确
+ -u：与-f参数类似，但是除了更新现有的文件外，也会将压缩文件中的其它文件解压缩到目录中
+ -v：执行是时显示详细的信息
+ -z：仅显示压缩文件的备注文字
+ -a：对文本文件进行必要的字符转换
+ -b：不要对文本文件进行字符转换
+ -C：压缩文件中的文件名称区分大小写
+ -j：不处理压缩文件中原有的目录路径
+ -L：将压缩文件中的全部文件名改为小写
+ -M：将输出结果送到more程序处理
+ -n：解压缩时不要覆盖原有的文件
+ -o：不必先询问用户，unzip执行后覆盖原有文件
+ -P：使用zip的密码选项
+ -q：执行时不显示任何信息
+ -s：将文件名中的空白字符转换为底线字符
+ -V：保留VMS的文件版本信息
+ -X：解压缩时同时回存文件原来的UID/GID
