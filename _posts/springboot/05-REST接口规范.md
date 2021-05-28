@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "REST接口规范"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 # REST接口规范
 
 # 使用spring-boot-start-web

@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Idea社区版配置"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 # Idea社区版配置
 ![Idea社区版](images/idea-community.png)  
 好的IDE绝对能让编程事半功倍。  

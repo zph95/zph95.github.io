@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "spring-boot-starter-logging日志配置"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 # spring-boot-starter-logging日志配置
 以下所有内容均可在[springboot-demo](https://github.com/zph-programmer/springboot)中找到。
 ## 所需依赖

@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Git-Commit-Message规范"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
 # Git-Commit-Message规范
 
 Git 每次提交代码，都要写 Commit message（提交说明），否则就不允许提交。

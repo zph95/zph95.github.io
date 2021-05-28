@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "Centos安装基础组件"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
 # Centos安装基础组件
 
 # 如果centos没有安装gcc，需要先安装gcc

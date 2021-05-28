@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "使用过滤器打印Rest接口日志"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 # 使用过滤器打印Rest接口日志
 以下所有内容均可在[springboot-demo](https://github.com/zph-programmer/springboot)中找到。
 

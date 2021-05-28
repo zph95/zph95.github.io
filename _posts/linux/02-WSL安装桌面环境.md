@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "WSL安装桌面环境"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
 # WSL安装桌面环境
 
 WSL-ubuntu安装桌面环境的文章网上已经又很多，装完xfc4桌面后直接用mobatXterm连接就行了。可参考：

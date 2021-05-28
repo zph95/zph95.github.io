@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "启用spring-boot-start-cache"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 # 启用spring-boot-start-cache
 以下所有内容均可在[springboot-demo](https://github.com/zph-programmer/springboot)中找到。  
 

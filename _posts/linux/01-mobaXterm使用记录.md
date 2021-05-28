@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "MobaXterm使用记录"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
 # MobaXterm使用记录
 
 由于再也不想使用各种盗版破解软件了，想找一个全功能的终端软件替代。

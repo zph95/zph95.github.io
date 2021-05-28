@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Validator与全局异常处理"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 #  Validator与全局异常处理
 
 开发过程中，后台的参数校验是必不可少的。如果对每一个参数都写if,else判断就太不优雅了。

@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "SQLite数据库"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
 # SQLite数据库
 有的时候 我们开发不需要一定要用到mysql、oracle等数据库，Sqlite也是我们的一种选择。
 
