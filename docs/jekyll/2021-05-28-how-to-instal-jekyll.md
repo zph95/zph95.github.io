@@ -17,7 +17,7 @@ sudo apt install gcc g++ make
 
 - [Ruby](http://www.ruby-lang.org/en/downloads/)（including development headers, Jekyll 2 需要 v1.9.3 及以上版本，Jekyll 3 需要 v2 及以上版本）
 
-  - sudo apt install ruby
+  - sudo apt install ruby bugy-dev
 
 - [RubyGems](http://rubygems.org/pages/download)
 
