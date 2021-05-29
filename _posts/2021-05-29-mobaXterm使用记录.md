@@ -1,8 +1,9 @@
 ---
 layout: post
 title:  "MobaXterm使用记录"
-date:   2021-05-28 22:29:36 +0800
+date:   2021-05-29 22:29:36 +0800
 categories: linux
+typora-root-url: ..
 ---
 # MobaXterm使用记录
 
@@ -34,13 +35,13 @@ MobaXterm是一款免费可商用的 SSH 客户端，可以在公司环境下使
 
 - 点击菜单Tools-MobaKeyGen(SSH key generator); 
 
-![image-20210304102209454](images\mobaXterm密钥生成.png) 
+![image-20210304102209454](/assets/images/mobaXterm密钥生成.png) 
 
 - 选择密钥类型RSA，设置为2048位。  
-  ![RSA，2048](images\key-generator.png)
+  ![RSA，2048](/assets/images\key-generator.png)
 
 - 点击Generate，生成密钥（鼠标在进度条上左右移动，加快生成速度, 这不是开玩笑，真的有用！( •̀ ω •́ )✧）。  
-  ![密钥生成](images\generate-key.png)
+  ![密钥生成](/assets/images\generate-key.png)
 
   
 
@@ -48,7 +49,7 @@ MobaXterm是一款免费可商用的 SSH 客户端，可以在公司环境下使
 
 
 
-![保存](images\save-private-key.png)
+![保存](/assets/images\save-private-key.png)
 
 ### 其它：使用命令生成公钥和私钥
 
@@ -106,7 +107,7 @@ scp authorized_keys root@ip:/root/.ssh/
 
  指定上一步生成的private key路径进行密钥登录。
 
-![image-20210304103113717](images\session.png)
+![image-20210304103113717](/assets/images\session.png)
 
 ## 3.sftp文件目录
 
@@ -114,7 +115,7 @@ scp authorized_keys root@ip:/root/.ssh/
 
 
 
-![image-20210304103737013](images\scp.png)
+![image-20210304103737013](/assets/images\scp.png)
 
 ## 4.rz和sz命令
 
@@ -161,11 +162,11 @@ MobaXterm 使用 rz、sz 命令进行下载、上传，不会直接弹出窗口�
 
   添加session，选择WSL，默认打开的是shell。如果使用xfce4桌面，可以选择xfce4 desktop.
 
-![连接WSL](images\WSL.png)
+![连接WSL](/assets/images\WSL.png)
 
 - 效果
 
-  ![ubuntu](images\WSL-ubuntu.png)
+  ![ubuntu](/assets/images\WSL-ubuntu.png)
 
   [返回目录](https://zph-programmer.github.io)
 
