@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "MobaXterm使用记录"
-date:   2021-05-29 22:29:36 +0800
+date:   2021-05-26 22:29:36 +0800
 categories: linux
 typora-root-url: ..
 ---
@@ -150,7 +150,7 @@ MobaXterm 使用 rz、sz 命令进行下载、上传，不会直接弹出窗口�
 >
 > *选择上传文件*
 
-![image-20210304104236710](images\szrzfile.png)
+![image-20210304104236710](/assets/images\szrzfile.png)
 
 ## 5. 连接WSL
 
@@ -168,11 +168,6 @@ MobaXterm 使用 rz、sz 命令进行下载、上传，不会直接弹出窗口�
 
   ![ubuntu](/assets/images\WSL-ubuntu.png)
 
-  [返回目录](https://zph-programmer.github.io)
-
-  
-
-  * [下一篇 ——WSL安装桌面环境](02-WSL安装桌面环境.md)
 
 ## 参考资料
 
