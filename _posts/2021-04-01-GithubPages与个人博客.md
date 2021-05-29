@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Githup pages 与 jekyll"
-date:   2021-04-30 22:29:36 +0800
+title:  "使用 Githup pages 搭一个博客网站"
+date:   2021-04-01 22:29:36 +0800
 categories: jekyll
 typora-root-url: ..
 ---
@@ -12,11 +12,7 @@ typora-root-url: ..
 
 当如果想从零开始搭一个网站，可要做的事情就比较多了。首先是买服务器，还要买域名，还要自己学WordPress等工具。
 
-折中一下，使用jekyll搭一个静态网站，就简单多了。
-
-## 何为jekyll
-
-**Jekyll**是一个简单的[静态网站生成器](https://zh.wikipedia.org/w/index.php?title=网页模板引擎系统&action=edit&redlink=1)，用于生成个人，项目或组织的网站。 它由[GitHub](https://zh.wikipedia.org/wiki/GitHub)联合创始人[汤姆·普雷斯顿·沃纳](https://zh.wikipedia.org/wiki/汤姆·普雷斯顿·沃纳)用[Ruby](https://zh.wikipedia.org/wiki/Ruby)编写，并根据[MIT许可证](https://zh.wikipedia.org/wiki/MIT许可证)发布。Jekyll不使用[数据库](https://zh.wikipedia.org/wiki/数据库) ，用户通过编写[Markdown](https://zh.wikipedia.org/wiki/Markdown)、[Textile](https://zh.wikipedia.org/w/index.php?title=纺织品（标记语言）&action=edit&redlink=1)或Liquid文件， 生成一个完整的静态网站，并且可以由[Apache HTTP Server](https://zh.wikipedia.org/wiki/Apache_HTTP_Server) ， [Nginx](https://zh.wikipedia.org/wiki/Nginx)或其他[Web服务器](https://zh.wikipedia.org/wiki/Web服务器)提供服务。Jekyll是[GitHub Pages](https://zh.wikipedia.org/wiki/GitHub)的引擎.
+折中一下，使用Github Pages搭一个静态网站，就简单多了。
 
 ### 创建一个Github Pages repository
 
