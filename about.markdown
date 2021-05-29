@@ -4,15 +4,8 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
-
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+吾生也有涯，吾知也无涯。  
+做为一名程序员，总是在面向google编程，面向百度编程，所以一直想找一个地方记录一些笔记。  
+这个平台首先要有云端和本地的备份，云端是为了方便在不同电脑上编写查阅，本地备份是担心数据丢了。 
+二是笔记要是公开的格式，不能是私有格式，不能有各种广告和限制。  思前想后，排除了各种国内网站，也只有Github Pages比较合适。  
+Github Pages上手简单，成本最低， 配合Typora写markdown刚刚好满足我所需要的。  

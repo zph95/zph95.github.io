@@ -1,0 +1,277 @@
+---
+layout: post
+title:  "使用过滤器打印Rest接口日志"
+date:   2021-05-28 14:29:36 +0800
+categories: springboot
+---
+
+# 使用过滤器打印Rest接口日志
+以下所有内容均可在[springboot-demo](https://github.com/zph-programmer/springboot)中找到。
+
+前面介绍了通过切面打印日志的方法，其实定义一个注解@ControllLog专门处理Controller层的方法就可以了。
+但是有时候有的人就是懒得连一个注解都不愿意加。想要统一的处理Rest接口，就得想办法在过滤器中获得入参和返回值。
+由于java的输入流只能读一次，输出流只能写一次，首先还要继承HttpServletRequestWrapper重写读取入参body的方式，
+和继承HttpServletResponseWrapper重写读取返回值body的方式。否则，前者会到导致InputStream为了打印日志已被读取过，
+controller层接受不到body里的入参；后者会导致OutputStream为了打印日志已被写入过，前端接收不到body里的返回值了。
+
+## BodyRequestWrapper
+```java
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.ReadListener;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
+import java.io.*;
+
+@Slf4j
+public class BodyRequestWrapper extends HttpServletRequestWrapper {
+    @Getter
+    private String body=null;
+
+    public BodyRequestWrapper(HttpServletRequest request) throws IOException {
+        super(request);
+        if (request.getInputStream() != null) {
+            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
+                StringBuilder stringBuilder = new StringBuilder();
+                char[] charBuffer = new char[128];
+                int bytesRead;
+                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                    stringBuilder.append(charBuffer, 0, bytesRead);
+                }
+                body = stringBuilder.toString();
+            } catch (Exception ex) {
+                log.error("获取请求体body异常：", ex);
+                throw ex;
+            }
+        }
+    }
+
+    @Override
+    public ServletInputStream getInputStream() {
+        final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
+        return new ServletInputStream() {
+            @Override
+            public boolean isFinished() {
+                return true;
+            }
+
+            @Override
+            public boolean isReady() {
+                return true;
+            }
+
+            @Override
+            public void setReadListener(ReadListener readListener) {
+
+            }
+            @Override
+            public int read() {
+                return byteArrayInputStream.read();
+            }
+        };
+    }
+
+    @Override
+    public BufferedReader getReader() {
+        return new BufferedReader(new InputStreamReader(this.getInputStream()));
+    }
+}
+```
+## BodyResponseWrapper
+
+```java
+import lombok.extern.slf4j.Slf4j;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
+import java.io.*;
+
+@Slf4j
+public class BodyResponseWrapper extends HttpServletResponseWrapper {
+    private final ByteArrayOutputStream output;
+
+    public BodyResponseWrapper(HttpServletResponse response) {
+        super(response);
+        output = new ByteArrayOutputStream();
+    }
+
+    /**
+     */
+    @Override
+    public ServletOutputStream getOutputStream() {
+         return new ServletOutputStream() {
+            @Override
+            public void write(int b) {
+                output.write(b);
+            }
+
+            @Override
+            public boolean isReady() {
+                return false;
+            }
+
+            @Override
+            public void setWriteListener(WriteListener writeListener) {
+            }
+        };
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        return new PrintWriter(new OutputStreamWriter(this.getOutputStream()));
+    }
+
+    /**
+     * 获取返回值
+     */
+    public String getBody() throws UnsupportedEncodingException {
+        return output.toString();
+    }
+}
+
+```
+
+## 过滤器
+
+```java
+import com.zph.programmer.springboot.servlet.BodyRequestWrapper;
+import com.zph.programmer.springboot.servlet.BodyResponseWrapper;
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+
+
+@Slf4j
+public class HttpServletWrapperFilter implements Filter {
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        log.info("init filter 打印REST接口日志过滤器");
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        BodyRequestWrapper requestWrapper = null;
+        HttpServletRequest httpServletRequest = null;
+        BodyResponseWrapper responseWrapper = null;
+        HttpServletResponse httpServletResponse = null;
+        if (request instanceof HttpServletRequest) {
+            httpServletRequest = (HttpServletRequest) request;
+            requestWrapper = new BodyRequestWrapper(httpServletRequest);
+        }
+        if (response instanceof HttpServletResponse) {
+            httpServletResponse = (HttpServletResponse) response;
+            responseWrapper = new BodyResponseWrapper(httpServletResponse);
+        }
+        if (httpServletRequest != null) {
+            StringBuilder requestParamsBuilder = new StringBuilder();
+            if (httpServletRequest.getQueryString() != null) {
+                //针对param入参
+                requestParamsBuilder.append(URLDecoder.decode(httpServletRequest.getQueryString(), StandardCharsets.UTF_8));
+            } else {
+                //针对body入参
+                requestParamsBuilder.append(requestWrapper.getBody());
+            }
+            String sb = "\n********************************* " + LocalDateTime.now().toString() + "\n" +
+                    "ServerAddress :  " + httpServletRequest.getScheme() + "://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort()
+                                        + httpServletRequest.getRequestURI() +" "+httpServletRequest.getMethod()+ "\n" +
+                    "ContentType   :  " + httpServletRequest.getContentType() + "\n" +
+                    "RequestParams :  " + requestParamsBuilder.toString() + "\n" +
+                    "********************************* Request Start\n";
+            log.info(sb);
+        }
+
+        chain.doFilter(requestWrapper != null ? requestWrapper : request,
+                responseWrapper != null ? responseWrapper : response);
+
+        if (httpServletResponse != null) {
+            String body = responseWrapper.getBody();
+            String sb = "\n********************************* " + LocalDateTime.now().toString() + "\n" +
+                    "status        :  " + httpServletResponse.getStatus() + "\n" +
+                    "ContentType   :  " + httpServletResponse.getContentType() + "\n" +
+                    "Response      :  " + body + "\n" +
+                    "********************************* Response End\n";
+            log.info(sb);
+            //重新 writer 返回值，重要！！！
+            response.getOutputStream().write(body.getBytes());
+        }
+
+    }
+
+    @Override
+    public void destroy() {
+
+    }
+}
+```
+最后再在配置类里将过滤器注册就行了。
+
+```java 
+/**
+     * 注册过滤器
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean<HttpServletWrapperFilter> filterRegistry() {
+        FilterRegistrationBean<HttpServletWrapperFilter> frBean = new FilterRegistrationBean<>();
+        frBean.setFilter(new HttpServletWrapperFilter());
+        frBean.setOrder(1);//多个过滤器时指定过滤器的执行顺序
+        frBean.addUrlPatterns("/*");
+        return frBean;
+    }
+
+```
+
+## 日志效果
+
+```log
+2021-02-11 17:25:20 |INFO  |http-nio-8080-exec-1 |HttpServletWrapperFilter.java:52 |com.zph.programmer.springboot.filter.HttpServletWrapperFilter |
+********************************* 2021-02-11T17:25:20.502694700
+ServerAddress :  http://127.0.0.1:8080/test/testCache POST
+ContentType   :  application/json
+RequestParams :  {
+    "key":"test-cache",
+    "value":"测试缓存"
+}
+********************************* Request Start
+
+2021-02-11 17:25:20 |INFO  |http-nio-8080-exec-1 |HttpServletWrapperFilter.java:65 |com.zph.programmer.springboot.filter.HttpServletWrapperFilter |
+********************************* 2021-02-11T17:25:20.697581400
+status        :  200
+ContentType   :  application/json
+Response      :  {"code":200,"status":"success","message":null,"moreInfo":null,"data":"OK"}
+********************************* Response End
+
+2021-02-11 17:25:22 |INFO  |http-nio-8080-exec-2 |HttpServletWrapperFilter.java:52 |com.zph.programmer.springboot.filter.HttpServletWrapperFilter |
+********************************* 2021-02-11T17:25:22.679441100
+ServerAddress :  http://127.0.0.1:8080/test/testCache GET
+ContentType   :  null
+RequestParams :  key=test-cache
+********************************* Request Start
+
+2021-02-11 17:25:22 |INFO  |http-nio-8080-exec-2 |HttpServletWrapperFilter.java:65 |com.zph.programmer.springboot.filter.HttpServletWrapperFilter |
+********************************* 2021-02-11T17:25:22.688437400
+status        :  200
+ContentType   :  application/json
+Response      :  {"code":200,"status":"success","message":null,"moreInfo":null,"data":"测试缓存"}
+********************************* Response End
+```
+## 其它
+为什么要费这么大劲打印日志呢？
+我觉得规整的日志绝对能更好得帮助排查问题，而且将接口日志存进数据库可以做更多事情，
+比如记录系统的运行，监控负载攻击，统计调用次数，哪些功能常用，哪些功能不常用；
+加上时间的话还可以统计接口的调用时长，哪些接口需要优化；
+如果接入了用户，还可以从记录用户行为，刻画用户画像等等。
+总之，规范的日志必不可少。
+
+* [返回目录](https://zph-programmer.github.io)
+    * [上一篇 —— REST接口规范](05-REST接口规范.md)
+    * [下一篇 —— SQLite数据库](07-SQLite数据库.md)
