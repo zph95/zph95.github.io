@@ -198,6 +198,41 @@ graph LR
 
 mermaid还支持时序图，状态图，类图，甘特图，饼图。
 
+饼图使用 `pie` 表示，标题下面分别是区域名称及其百分比。
+
+### **时序图**
+
+语法解释：`->>` 代表实线箭头，`-->>` 则代表虚线。
+
+```mermaid
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+```
+
+
+
+### **状态图**
+
+语法解释：`[*]` 表示开始或者结束，如果在箭头右边则表示结束。
+
+```mermaid
+stateDiagram
+    [*] --> s1
+    s1 --> [*]
+```
+
+### **饼图**
+
+```mermaid
+pie
+    title Key elements in Product X
+    "Calcium" : 42.96
+    "Potassium" : 50.05
+    "Magnesium" : 10.01
+    "Iron" :  5
+```
+
 
 
 ## Github Pages支持
