@@ -237,4 +237,4 @@ pie
 
 ## Github Pages支持
 
-很遗憾，Github pages是使用jekyll生成的html来显示页面的，jekyll虽然有插件jekyll-mermaid 插件，但是githup pages有自己的插件白名单[Dependency versions](https://pages.github.com/versions/)。解决方案，直接本地生产html文件放上去就行了。
+很遗憾，Github pages是使用jekyll生成的html来显示页面的，jekyll虽然有插件jekyll-mermaid 插件，但是githup pages有自己的插件白名单[Dependency versions](https://pages.github.com/versions/)。解决方案，直接本地生成html文件放上去就行了。
