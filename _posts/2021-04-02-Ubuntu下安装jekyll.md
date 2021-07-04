@@ -58,7 +58,7 @@ $   cd my-awesome-site
 
 $   bundle install
 
-$   bundle exec jekyll serve
+$   bundle exec jekyll server
 
 # => 打开浏览器 http://localhost:4000
 ```
@@ -87,7 +87,7 @@ Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit number
 
 ![](/assets/images/jekyll目录结构.png)
 
-在`_post`目录下添加你要发表的博客文章，需要由YYYY-mm-dd-titel.md格式命名的文件。jekyll会通过`_config.yml`和`Gemfile`两个配置文件在_site目录下生成对应的html文件，这样页面上就会在主页面按照时间顺序显示文章链接。如果你在其它地方添加了markdown或者html文件，jekyll也会生成html文件，它们会显示在页面的头部。如果只是草稿文件，可以在`_config.yml`的exclude配置中去掉对该文件或目录的监听。
+在`_post`目录下添加你要发表的博客文章，需要由YYYY-mm-dd-title.md格式命名的文件。jekyll会通过`_config.yml`和`Gemfile`两个配置文件在_site目录下生成对应的html文件，这样页面上就会在主页面按照时间顺序显示文章链接。如果你在其它地方添加了markdown或者html文件，jekyll也会生成html文件，它们会显示在页面的头部。如果只是草稿文件，可以在`_config.yml`的exclude配置中去掉对该文件或目录的监听。
 
 
 
