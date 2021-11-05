@@ -1,26 +1,518 @@
-基础
+# 计算机基础
 
-进程和线程的区别，进程间如何通讯，线程间如何通讯
+1. 并发与并行
 
-HashMap的数据结构是什么？如何实现的。和HashTable，ConcurrentHashMap的区别
+   并发：在操作系统中，某一时间段，几个程序在同一个CPU上运行，但在任意一个时间点上，只有一个程序在CPU上运行。
+
+   
+
+   当有多个线程时，如果系统只有一个CPU，那么CPU不可能真正同时进行多个线程，CPU的运行时间会被划分成若干个时间段，每个时间段分配给各个线程去执行，一个时间段里某个线程运行时，其他线程处于挂起状态，这就是并发。并发解决了程序排队等待的问题，如果一个程序发生阻塞，其他程序仍然可以正常执行。
+
+   
+
+   并行：当操作系统有多个CPU时，一个CPU处理A线程，另一个CPU处理B线程，两个线程互相不抢占CPU资源，可以同时进行，这种方式成为并行。
+
+   1. 并发只是在宏观上给人感觉有多个程序在同时运行，但在实际的单CPU系统中，每一时刻只有一个程序在运行，微观上这些程序是分时交替执行。
+   2. 在多CPU系统中，将这些并发执行的程序分配到不同的CPU上处理，每个CPU用来处理一个程序，这样多个程序便可以实现**同时**执行。
+
+2. 进程、线程、协程的区别
+
+   ## **线程**
+
+   
+   如果说进程和进程之间相当于程序与程序之间的关系，那么线程与线程之间就相当于程序内的任务和任务之间的关系。所以线程是依赖于进程的，也称为 「微进程」 。它是 程序执行过程中的最小单元 。
+
+   
+   一个程序内包含了多种任务。打个比方，用播放器看视频的时候，视频输出的画面和声音可以认为是两种任务。当你拖动进度条的时候又触发了另外一种任务。拖动进度条会导致画面和声音都发生变化，如果进程里没有线程的话，那么可能发生的情况就是：
+
+   
+   拖动进度条->画面更新->声音更新。你会明显感到画面和声音和进度条不同步。
+
+
+   但是加上了线程之后，线程能够共享进程的大部分资源，并参与CPU的调度。意味着它能够在进程间进行切换，实现「并发」，从而反馈到使用上就是拖动进度条的同时，画面和声音都同步了。所以我们经常能听到的一个词是「多线程」，就是把一个程序分成多个任务去跑，让任务更快处理。不过线程和线程之间由于某些资源是独占的，会导致锁的问题。例如Python的GIL多线程锁。
+
+   ##  **进程与线程的区别**
+
+   1. 进程是CPU资源分配的基本单位，线程是独立运行和独立调度的基本单位（CPU上真正运行的是线程）。
+   2. 进程拥有自己的资源空间，一个进程包含若干个线程，线程与CPU资源分配无关，多个线程共享同一进程内的资源。
+   3. 线程的调度与切换比进程快很多。
+
+   **CPU密集型代码(各种循环处理、计算等等)：使用多进程。IO密集型代码(文件处理、网络爬虫等)：使用多线程**
+
+3. ## **阻塞与非阻塞**
+
+   
+   阻塞是指调用线程或者进程被操作系统挂起。
+   非阻塞是指调用线程或者进程不会被操作系统挂起。
+
+   ##  **同步与异步**
+
+   
+   同步是阻塞模式，异步是非阻塞模式。
+
+   - 同步就是指一个进程在执行某个请求的时候，若该请求需要一段时间才能返回信息，那么这个进程将会一直等待下去，知道收到返回信息才继续执行下去；
+   - 异步是指进程不需要一直等下去，而是继续执行下面的操作，不管其他进程的状态。当有消息返回式系统会通知进程进行处理，这样可以提高执行的效率。
+
+   由调用方盲目主动问询的方式是同步调用，由被调用方主动通知调用方任务已完成的方式是异步调用。
+
+   ![img](https://pic4.zhimg.com/80/v2-f1118cbd6283a2626e6d4b9e7477b21b_720w.jpg)
+
+   ## **协程**
+
+
+   协程，又称微线程，纤程。英文名Coroutine。一句话说明什么是线程：协程是一种用户态的轻量级线程。
+
+   
+   协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈。因此：
+   协程能保留上一次调用时的状态（即所有局部状态的一个特定组合），每次过程重入时，就相当于进入上一次调用的状态，换种说法：进入上一次离开时所处逻辑流的位置。
+
+   
+   协程的好处：
+
+   1. 无需线程上下文切换的开销
+   2. 无需原子操作锁定及同步的开销
+   3. 方便切换控制流，简化编程模型
+
+   高并发+高扩展性+低成本：一个CPU支持上万的协程都不是问题。所以很适合用于高并发处理。
+
+   
+   缺点：
+
+   1. 无法利用多核资源：协程的本质是个单线程,它不能同时将 单个CPU 的多个核用上,协程需要和进程配合才能运行在多CPU上.当然我们日常所编写的绝大部分应用都没有这个必要，除非是cpu密集型应用。
+   2. 进行阻塞（Blocking）操作（如IO时）会阻塞掉整个程序
+
+4. 进程间如何通讯，线程间如何通讯
+
+   ## 4.1 进程通信
+
+   ### 管道(pipe)
+
+   管道是一种半双工的通信方式，数据只能单向流动，而且只能在具有亲缘关系的进程间使用。进程的亲缘关系通常是指父子进程关系。
+
+   
+
+   ### 有名管道 (namedpipe)
+
+   有名管道也是半双工的通信方式，但是它允许无亲缘关系进程间的通信。
+
+   
+
+   ### 信号量(semaphore)
+
+   信号量是一个计数器，可以用来控制多个进程对共享资源的访问。它常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。
+
+   
+
+   ### 消息队列(messagequeue)
+
+   消息队列是由消息的链表，存放在内核中并由消息队列标识符标识。消息队列克服了信号传递信息少、管道只能承载无格式字节流以及缓冲区大小受限等缺点。
+
+   
+
+   ### 信号 (sinal)
+
+   信号是一种比较复杂的通信方式，用于通知接收进程某个事件已经发生。
+
+   
+
+   ### 共享内存(shared memory)
+
+   共享内存就是映射一段能被其他进程所访问的内存，这段共享内存由一个进程创建，但多个进程都可以访问。共享内存是最快的 IPC 方式，它是针对其他进程间通信方式运行效率低而专门设计的。它往往与其他通信机制，如信号量，配合使用，来实现进程间的同步和通信。
+
+   
+
+   ### 套接字(socket)
+
+   套接口也是一种进程间通信机制，与其他通信机制不同的是，它可用于不同设备及其间的进程通信。
+
+   ![img](https://upload-images.jianshu.io/upload_images/21143064-a063393cb8367b0d.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
+
+   ## 4.2 线程间的通信方式
+
+   线程间通信主要用于线程同步，故线程没有像进程通信中用于数据交换的通信机制，主要有如下几种方式：
+
+   - 锁机制：
+
+   1. 互斥锁：以排它方式阻止数据结构被并发修改的方式
+   2. 读写锁：允许多个线程同时读共享数据，对写操作互斥
+   3. 条件变量：以*原子*方式阻塞进程，直到某个特定条件为真为止。对条件测试是在**互斥锁**的保护下进行的。*条件变量始终与互斥锁一起使用*。
+
+   - 信号量机制：无名线程信号量、有名线程信号量
+   - 信号机制： 类似于进程间的信号处理。
+
+   
+
+5. #### 线程的上下文切换开销
+
+   直接开销：操作系统保存恢复上下文（CPU寄存器值，程序计数器值）所需的开销； 线程调度器调度线程的开销
+
+   间接开销：处理器高速缓存重新加载的开销；上下文切换可能导致整个一级高速缓存中的内容被冲刷，即被写入到下一级高速缓存或主存
+
+   
+
+   # JAVA
+
+   #### JAVA的数据结构存储：
+
+   1、数组：查询快，增删慢；连续空间寻址快。
+
+   2、链表：增删快，查询慢；空间不连续，增删只需修改指针。
+
+   
+
+6. #### Hash表结构：
+
+   从下图中，我们可以发现哈希表是由***数组+链表\***组成的，一个长度为16的数组中，每个元素存储的是一个链表的头结点，通过功能类似于hash(key.hashCode())%len的操作，获得要添加的元素所要存放的的数组位置。
+
+   HashMap的哈希算法实际操作是通过***位运算\***，比取模运算效率更高，同样能达到使其分布均匀的目的，后面会介绍。
+
+   键值对所存放的数据结构其实是HashMap中定义的一个Entity内部类，数组来实现的，属性有key、value和指向下一个Entity的next。
+
+   
+
+   ![img](https:////upload-images.jianshu.io/upload_images/8689093-caf5950cc399df06.png?imageMogr2/auto-orient/strip|imageView2/2/w/541/format/webp)
+
+   
+
+   HashMap的实现重点需要注意的在两个方面，一个是链表结构，一个是table的resize()扩容；
+
+   
+
+   
+
+   6、HashMap的数据结构是什么？如何实现的。ConcurrentHashMap的区别
+
+   - jdk1.7中底层是由**数组（也有叫做“位桶”的）+链表**实现；jdk1.8中底层是由**数组+链表/红黑树**实现
+
+   - 可以存储null键和null值，线程不安全。在HashMap中，null可以作为键，这样的键只有一个，但可以有一个或多个键所对应的值为null。`当get()方法返回null值时，即可以表示HashMap中没有该key，也可以表示该key所对应的value为null`。因此，在HashMap中不能由get()方法来判断HashMap中是否存在某个key，应该用`containsKey()`方法来判断。而在Hashtable中，无论是key还是value都不能为null。
+
+   - 初始size为**16**，扩容：newsize = oldsize*2，`size一定为2的n次幂`
+
+   - 扩容针对整个Map，每次扩容时，原来数组中的元素依次重新计算存放位置，并重新插入
+
+   - 插入元素后才判断该不该扩容，有可能无效扩容（插入后如果扩容，如果没有再次插入，就会产生无效扩容）
+
+   - 当Map中元素总数超过Entry数组的75%，触发扩容操作，为了减少链表长度，元素分配更均匀
+
+   - 1.7中是**先扩容后插入**新值的，1.8中是**先插值再扩容**
+
+     `为什么说HashMap是线程不安全的？`在接近临界点时，若此时两个或者多个线程进行put操作，都会进行resize（扩容）和reHash（为key重新计算所在位置），而reHash在并发的情况下可能会形成`链表环`。总结来说就是在多线程环境下，使用HashMap进行put操作会引起死循环，导致CPU利用率接近100%，所以在并发情况下不能使用HashMap。为什么在并发执行put操作会引起死循环？是因为多线程会导致HashMap的Entry链表形成环形数据结构，一旦形成环形数据结构，Entry的next节点永远不为空，就会产生死循环获取Entry。jdk1.7的情况下，并发扩容时容易形成链表环，此情况在1.8时就好太多太多了。因为在1.8中当链表长度大于阈值（默认长度为8）时，链表会被改成树形（红黑树）结构。
+
+     ## HashMap的初始值要考虑加载因子:
+
+     - 哈希冲突：若干Key的哈希值按数组大小取模后，如果落在同一个数组下标上，将组成一条Entry链，对Key的查找需要遍历Entry链上的每个元素执行equals()比较。
+     - 加载因子：为了降低哈希冲突的概率，默认当HashMap中的键值对达到数组大小的75%时，即会触发扩容。因此，如果预估容量是100，即需要设定100/0.75＝134的数组大小。
+     - 空间换时间：如果希望加快Key查找的时间，还可以进一步降低加载因子，加大初始大小，以降低哈希冲突的概率。
+
+     `TreeMap`是基于红黑树的一种提供顺序访问的Map，与HashMap不同的是它的get、put、remove之类操作都是o(log(n))的时间复杂度，具体顺序可以由指定的Comparator来决定，或者根据键的自然顺序来判断。
+
+     **对HashMap做下总结**：
+     HashMap基于哈希散列表实现 ，可以实现对数据的读写。**将键值对传递给put方法时，它调用键对象的hashCode()方法来计算hashCode，然后找到相应的bucket位置（即数组）来储存值对象。当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回值对象**。HashMap使用链表来解决hash冲突问题，当发生冲突了，对象将会储存在链表的头节点中。HashMap在每个链表节点中储存键值对对象，当两个不同的键对象的hashCode相同时，它们会储存在同一个bucket位置的链表中，如果链表大小超过阈值（TREEIFY_THRESHOLD,8），链表就会被改造为树形结构。
+
+     **有个问题要特别声明下**：
+
+     - HashMap在jdk1.7中采用**表头插入法**，在扩容时会**改变**链表中元素原本的顺序，以至于在并发场景下导致链表成环的问题。
+     - 在jdk1.8中采用的是**尾部插入法**，在扩容时会保持链表元素原本的顺序，就不会出现链表成环的问题了。
+
+     **在容器安全上，1.8 中的 ConcurrentHashMap 放弃了 JDK1.7 中的分段技术，而是采用了 CAS 机制 + synchronized 来保证并发安全性，但是在 ConcurrentHashMap 实现里保留了 Segment 定义，这仅仅是为了保证序列化时的兼容性而已，并没有任何结构上的用处。** 这里插播个 CAS 机制的知识点：
+
+     ##### CAS 机制
+
+     CAS 典型的应用莫过于 AtomicInteger 了，CAS 属于原子操作的一种，能够保证一次读写操作是原子的。CAS 通过将内存中的值与期望值进行比较，只有在两者相等时才会对内存中的值进行修改，CAS 是在保证性能的同时提供并发场景下的线程安全性。在 Java 中 CAS 实现位于 sun.misc.Unsafe 类中，该类中定义了大量的 native 方法，CAS 的实现有以下几个方法：
+
+     ```java
+     public final native boolean compareAndSwapObject(Object o, long offset, Object expected, Object x);
+     public final native boolean compareAndSwapInt(Object o, long offset, int expected, int x);
+     public final native boolean compareAndSwapLong(Object o, long offset, long expected, long x);
+     ```
+
+     我们只能看到定义，并不能看到具体的实现，具体的实现依赖于操作系统，我们就不去管这些了，简单了解方法里面的参数是啥意思就行了：
+
+     - o ：目标操作对象
+     - offset ：目标操作数内存偏移地址
+     - expected ：期望值
+     - x ：更新值
+
+     CAS 机制虽然无需加锁、安全且高效，但也存在一些缺点，概括如下：
+
+     - 循环检查的时间可能较长，不过可以限制循环检查的次数
+     - 只能对一个共享变量执行原子操作
+     - 存在 ABA 问题（ABA 问题是指在 CAS 两次检查操作期间，目标变量的值由 A 变为 B，又变回 A，但是 CAS 看不到这中间的变换，对它来说目标变量的值并没有发生变化，一直是 A，所以 CAS 操作会继续更新目标变量的值。）
+
+     在存储结构上，**JDK1.8 中 ConcurrentHashMap 放弃了 HashEntry 结构而是采用了跟 HashMap 结构非常相似，采用 Node 数组加链表（链表长度大于8时转成红黑树）的形式**，Node 节点设计如下：
+
+     ```java
+     static class Node<K,V> implements Map.Entry<K,V> {
+             final int hash;
+             final K key;
+             volatile V val;
+             volatile Node<K,V> next;
+             ...省略...
+      }       
+     ```
+
+     跟 HashMap 一样 Key 字段被 final 修饰，说明在生命周期内，key 是不可变的， val 字段被 volatile 修饰了，这就保证了 val 字段的可见性。
+
+     JDK1.8 中的 ConcurrentHashMap 结构如下图所示：
+
+     ![JDK1.8 ConcurrentHashMap 结构图](https://segmentfault.com/img/remote/1460000021237442)
+
+     在这里我提一下 ConcurrentHashMap 默认构造函数，我觉得这个地方比较有意思，ConcurrentHashMap 的默认构造函数如下：
+
+     ```java
+     public ConcurrentHashMap() {
+     }
+     ```
+
+     发现没这个构造函数啥事没干，为啥要这样设计？这样做的好处是实现了懒加载（lazy-load 形式），有效避免了初始化的开销，这也是 JDK1.7 中ConcurrentHashMap 被很多人抱怨的地方。
+
+     结构上的变化就聊上面的两点，跟上面一样，我们还是来看看我们关心的问题，如何解决 HashMap 扩容时不安全的问题，带着这个问题来阅读 ConcurrentHashMap 的源代码，关于 ConcurrentHashMap 的源代码，在本文中主要聊新增（putVal ）和扩容（transfer ）这两个方法，其他方法就不在一一介绍了。
+
+7. ArrayList是如何实现的，ArrayList和LinkedList的区别？ArrayList如何实现扩容。
+
+   ArrayList和LinkedList区别
+       我们知道，通常情况下，ArrayList和LinkedList的区别有以下几点：
+
+           1. ArrayList是实现了基于动态数组的数据结构，而LinkedList是基于链表的数据结构；
+          2. 对于随机访问get和set，ArrayList要优于LinkedList，因为LinkedList要移动指针；
+       
+          3. 对于添加和删除操作add和remove，一般大家都会说LinkedList要比ArrayList快，因为ArrayList要移动数据。但是实际情况并非这样，对于添加或删除，LinkedList和ArrayList并不能明确说明谁快谁慢，ArrayList想要get(int index)元素时，直接返回index位置上的元素，而LinkedList需要通过for循环进行查找，虽然LinkedList已经在查找方法上做了优化，比如index < size / 2，则从左边开始查找，反之从右边开始查找，但是还是比ArrayList要慢。这点是毋庸置疑的。
+               ArrayList想要在指定位置插入或删除元素时，主要耗时的是System.arraycopy动作，会移动index后面所有的元素；LinkedList主耗时的是要先通过for循环找到index，然后直接插入或删除。这就导致了两者并非一定谁快谁慢
+   - ArrayList 扩容
+
+   先给 ArrayList 个初始长度：
+
+   ```
+   List a  = new ArrayList<>(4);
+   复制代码
+   ```
+
+   ArrayList 内部会产生一个等长的 Object 数组 elementData，每次 add 的时候都会检测是否需要扩容。每次扩容为旧的1.5倍。切最大长度不超过 2147483639。
+
+   
+
+8. equals方法，hashcode方法
+
+   # 一、equal()方法
+
+    Object类中equals()方法实现如下：
+
+   ```
+   public` `boolean` `equals(Object obj) {``  ``return` `(``this` `== obj);``}
+   ```
+
+   通过该实现可以看出，Object类的实现采用了区分度最高的算法，即只要两个对象不是同一个对象，那么equals()一定返回false。
+
+   虽然我们在定义类时，可以重写equals()方法，但是有一些注意事项；JDK中说明了实现equals()方法应该遵守的约定：
+
+   （1）自反性：x.equals(x)必须返回true。
+
+   （2）对称性：x.equals(y)与y.equals(x)的返回值必须相等。
+
+   （3）传递性：x.equals(y)为true，y.equals(z)也为true，那么x.equals(z)必须为true。
+
+   （4）一致性：如果对象x和y在equals()中使用的信息都没有改变，那么x.equals(y)值始终不变。
+
+   （5）非null：x不是null，y为null，则x.equals(y)必须为false。
+
+   # 二、hashCode()方法
+
+   ## 1、Object的hashCode()
+
+   Object类中hashCode()方法的声明如下：
+
+   ```
+   public` `native` `int` `hashCode();
+   ```
+
+   可以看出，hashCode()是一个native方法，而且返回值类型是整形；实际上，该native方法将对象在内存中的地址作为哈希码返回，可以保证不同对象的返回值不同。
+
+   与equals()方法类似，hashCode()方法可以被重写。JDK中对hashCode()方法的作用，以及实现时的注意事项做了说明：
+
+   （1）hashCode()在哈希表中起作用，如java.util.HashMap。
+
+   （2）如果对象在equals()中使用的信息都没有改变，那么hashCode()值始终不变。
+
+   （3）如果两个对象使用equals()方法判断为相等，则hashCode()方法也应该相等。
+
+   （4）如果两个对象使用equals()方法判断为不相等，则不要求hashCode()也必须不相等；但是开发人员应该认识到，不相等的对象产生不相同的hashCode可以提高哈希表的性能。
+
+   ## 2、hashCode()的作用
+
+   总的来说，hashCode()在哈希表中起作用，如HashSet、HashMap等。
+
+   当我们向哈希表(如HashSet、HashMap等)中添加对象object时，首先调用hashCode()方法计算object的哈希码，通过哈希码可以直接定位object在哈希表中的位置(一般是哈希码对哈希表大小取余)。如果该位置没有对象，可以直接将object插入该位置；如果该位置有对象(可能有多个，通过链表实现)，则调用equals()方法比较这些对象与object是否相等，如果相等，则不需要保存object；如果不相等，则将该对象加入到链表中。
+
+   这也就解释了为什么**equals()相等，则hashCode()必须相等。**如果两个对象equals()相等，则它们在哈希表(如HashSet、HashMap等)中只应该出现一次；如果hashCode()不相等，那么它们会被散列到哈希表的不同位置，哈希表中出现了不止一次。
+
+   实际上，在JVM中，加载的对象在内存中包括三部分：对象头、实例数据、填充。其中，对象头包括指向对象所属类型的指针和MarkWord，而**MarkWord中除了包含对象的GC分代年龄信息、加锁状态信息外，还包括了对象的hashcode**；对象实例数据是对象真正存储的有效信息；填充部分仅起到占位符的作用, 原因是HotSpot要求对象起始地址必须是8字节的整数倍。
+
+   
+
+9. 深克隆和浅克隆
+
+   **浅克隆**：被复制对象的所有变量都含有与原来的对象相同的值，而所有的对其他对象的引用仍然指向原来的对象。
+   **深克隆**：除去那些引用其他对象的变量，被复制对象的所有变量都含有与原来的对象相同的值。那些引用其他对象的变量将指向被复制过的新对象，而不再是原有的那些被引用的对象。换言之，深复制把要复制的对象所引用的对象都复制了一遍。
+
+   ## 如何实现克隆
+
+   下面是浅克隆的实现步骤
+
+   1. 对象的类实现Cloneable接口；
+   2. 覆盖Object类的clone()方法（**覆盖clone()方法，访问修饰符设为public，默认是protected,但是如果所有类都在同一个包下protected是可以访问的**）；
+   3. 在clone()方法中调用super.clone()；
+
+   ## 深克隆
+
+   要解决上面复制相同引用的问题，就要用到深拷贝。深拷贝实现的是对所有可变(没有被final修饰的引用变量)引用类型的成员变量都开辟内存空间所以一般深拷贝对于浅拷贝来说是比较耗费时间和内存开销的。
+
+   深拷贝有两种实现方法：
+
+   ### 重写Clone()方法
+
+   ### 序列化实现
+
+   通过重写Object的clone方法去实现深克隆十分麻烦，特别是嵌套比较多和有数组的情况下，重写Clone()很复杂。所以我们可以通过**`序列化实现深克隆`**。
+
+   **概念：**
+
+   - **序列化**：把对象写到流里
+   - **反序列化**：把对象从流中读出来
+
+   在Java里深克隆一个对象，常常可以先使对象实现Serializable接口，然后把对象（实际上只是对象的一个拷贝）写到一个流里，再从流里读出来，便可以重建对象。
+
+   **注意：**
+
+   - `写在流里的是对象的一个拷贝，而原对象仍然存在于JVM里面`。
+   - `对象以及对象内部所有引用到的对象都是可序列化的`
+   - `如果不想序列化，则需要使用transient来修饰`
+
+   ## 总结
+
+   其实现在不推荐大家用Cloneable接口，实现比较麻烦，现在借助Apache Commons或者
+   springframework可以直接实现：
+
+   - 浅克隆：BeanUtils.cloneBean(Object obj);BeanUtils.copyProperties(S,T);
+   - 深克隆：SerializationUtils.clone(T object);
+
+   BeanUtils是利用反射原理获得所有类可见的属性和方法，然后复制到target类。
+   SerializationUtils.clone()就是使用我们的前面讲的序列化实现深克隆，当然你要把要克隆的类实现Serialization接口。
+
+10. JVM内存模型
+
+11. JVM GC，GC算法。
+
+    
+
+12. 什么情况会出现Full GC，什么情况会出现young GC
+
+    针对HotSpot VM的实现，它里面的GC其实准确分类只有两大种：
+
+    - Partial GC：并不收集整个GC堆的模式
+
+    - - Young GC：只收集young gen的GC
+      - Old GC：只收集old gen的GC。只有CMS的concurrent collection是这个模式
+      - Mixed GC：收集整个young gen以及部分old gen的GC。只有G1有这个模式
+
+    - Full GC：收集整个堆，包括young gen、old gen、perm gen（如果存在的话）等所有部分的模式。
+
+    Major GC通常是跟full GC是等价的，收集整个GC堆。但因为HotSpot VM发展了这么多年，外界对各种名词的解读已经完全混乱了，当有人说“major GC”的时候一定要问清楚他想要指的是上面的full GC还是old GC。
+
+    最简单的分代式GC策略，按HotSpot VM的serial GC的实现来看，触发条件是：
+
+    - young GC：当young gen中的eden区分配满的时候触发。注意young GC中有部分存活对象会晋升到old gen，所以young GC后old gen的占用量通常会有所升高。
+    - full GC：当准备要触发一次young GC时，如果发现统计数据说之前young GC的平均晋升大小比目前old gen剩余的空间大，则不会触发young GC而是转为触发full GC（因为HotSpot VM的GC里，除了CMS的concurrent collection之外，其它能收集old gen的GC都会同时收集整个GC堆，包括young gen，所以不需要事先触发一次单独的young GC）；或者，如果有perm gen的话，要在perm gen分配空间但已经没有足够空间时，也要触发一次full GC；或者System.gc()、heap dump带GC，默认也是触发full GC。
+
+    HotSpot VM里其它非并发GC的触发条件复杂一些，不过大致的原理与上面说的其实一样。
+    当然也总有例外。Parallel Scavenge（-XX:+UseParallelGC）框架下，默认是在要触发full GC前先执行一次young GC，并且两次GC之间能让应用程序稍微运行一小下，以期降低full GC的暂停时间（因为young GC会尽量清理了young gen的死对象，减少了full GC的工作量）。控制这个行为的VM参数是-XX:+ScavengeBeforeFullGC
+
+13. CopyOnWriteArrayList实现原理
+
+    **CopyOnWriteArrayList**是Java并发包中提供的一个并发容器，它是个**线程安全且读操作无锁的ArrayList**，写操作则通过创建底层数组的新副本来实现，是一种**读写分离**的并发策略，我们也可以称这种容器为"写时复制器"，Java并发包中类似的容器还有CopyOnWriteSet。
+
+    # 实现原理
+
+    　　我们都知道，集合框架中的ArrayList是非线程安全的，Vector虽是线程安全的，但由于简单粗暴的锁同步机制，性能较差。而CopyOnWriteArrayList则提供了另一种不同的并发处理策略（当然是针对特定的并发场景）。
+
+    　　很多时候，我们的系统应对的都是**读多写少**的并发场景。CopyOnWriteArrayList容器允许并发读，读操作是无锁的，性能较高。至于写操作，比如向容器中添加一个元素，**则首先将当前容器复制一份，然后在新副本上执行写操作，结束之后再将原容器的引用指向新容器。**
+
+    **优点：**
+
+    　　读操作性能很高，因为无需任何同步措施，比较适用于**读多写少**的并发场景。Java的list在遍历时，若中途有别的线程对list容器进行修改，则会抛出**ConcurrentModificationException**异常。而CopyOnWriteArrayList由于其"读写分离"的思想，遍历和修改操作分别作用在不同的list容器，所以在使用迭代器进行遍历时候，也就不会抛出ConcurrentModificationException异常了
+
+    　　**缺点：**
+
+    　　缺点也很明显，**一是内存占用问题**，毕竟每次执行写操作都要将原容器拷贝一份，数据量大时，对内存压力较大，可能会引起频繁GC；**二是无法保证实时性**，Vector对于读写操作均加锁同步，可以保证读和写的强一致性。而CopyOnWriteArrayList由于其实现策略的原因，写和读分别作用在新老不同容器上，在写操作执行过程中，读不会阻塞但读取到的却是老容器的数据。
+
+14. IO和NIO的区别，NIO优点
+
+    **.面向流与面向缓冲**
+
+    Java IO和NIO之间第一个最大的区别是，IO是面向流的，NIO是面向缓冲区的。 Java IO面向流意味着每次从流中读一个或多个字节，直至读取所有字节，它们没有被缓存在任何地方。此外，它不能前后移动流中的数据。如果需要前后移动从流中读取的数据，需要先将它缓存到一个缓冲区。 Java NIO的缓冲导向方法略有不同。数据读取到一个它稍后处理的缓冲区，需要时可在缓冲区中前后移动。这就增加了处理过程中的灵活性。但是，还需要检查是否该缓冲区中包含所有您需要处理的数据。而且，需确保当更多的数据读入缓冲区时，不要覆盖缓冲区里尚未处理的数据。
+
+    **2.阻塞与非阻塞IO**
+
+    Java IO的各种流是阻塞的。这意味着，当一个线程调用read() 或 write()时，该线程被阻塞，直到有一些数据被读取，或数据完全写入。该线程在此期间不能再干任何事情了。Java NIO的非阻塞模式，使一个线程从某通道发送请求读取数据，但是它仅能得到目前可用的数据，如果目前没有数据可用时，就什么都不会获取，而不是保持线程阻塞，所以直至数据变的可以读取之前，该线程可以继续做其他的事情。 非阻塞写也是如此。一个线程请求写入一些数据到某通道，但不需要等待它完全写入，这个线程同时可以去做别的事情。 线程通常将非阻塞IO的空闲时间用于在其它通道上执行IO操作，所以一个单独的线程现在可以管理多个输入和输出通道（channel）。
+
+    **3.选择器（Selectors）**
+
+    Java NIO的选择器允许一个单独的线程来监视多个输入通道，你可以注册多个通道使用一个选择器，然后使用一个单独的线程来“选择”通道：这些通道里已经有可以处理的输入，或者选择已准备写入的通道。这种选择机制，使得一个单独的线程很容易来管理多个通道。
+
+15. LOCK以及synchronized的实现区别
+
+    1. Lock是一个接口而synchronized是java中的关键字，synchronized是内置的语言实现，synchronized是在JVM层面上是实现的，出异常时JVM会自动释放锁定，但是Lock不行，Lock是通过代码实现的，要保证锁定一定会被释放，就必须将unLock()放到finally{}中；
+    2. synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生。
+    3. Lock可以让等待锁的线程响应中断，线程可以中断去干别的事务，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断
+    4. 通过Lock可以知道有没有成功获取锁，而synchronized却无法办到
+    5. Lock可以提高多个线程进行读操作的效率
+    6. 总结：当资源竞争激烈时，Lock的性能要远远优于synchronized
+
+16. Java线程池的实现原理，keepAliveTime等参数的作用
+
+    其实java线程池的实现原理很简单，说白了就是一个线程集合workerSet和一个阻塞队列workQueue。当用户向线程池提交一个任务(也就是线程)时，线程池会先将任务放入workQueue中。workerSet中的线程会不断的从workQueue中获取线程然后执行。当workQueue中没有任务的时候，worker就会阻塞，直到队列中有任务了就取出来继续执行。
+
+    线程池的几个主要参数的作用
+
+    ```java
+    public ThreadPoolExecutor(int corePoolSize,
+                                  int maximumPoolSize,
+                                  long keepAliveTime,
+                                  TimeUnit unit,
+                                  BlockingQueue<Runnable> workQueue,
+                                  ThreadFactory threadFactory,
+                                  RejectedExecutionHandler handler)
+    ```
+
+    
+
+    corePoolSize: 规定线程池有几个线程(worker)在运行。
+    maximumPoolSize: 当workQueue满了,不能添加任务的时候，这个参数才会生效。规定线程池最多只能有多少个线程(worker)在执行。
+    keepAliveTime: 超出corePoolSize大小的那些线程的生存时间,这些线程如果长时间没有执行任务并且超过了keepAliveTime设定的时间，就会消亡。
+    unit: 生存时间对于的单位
+    workQueue: 存放任务的队列
+    threadFactory: 创建线程的工厂
+    handler: 当workQueue已经满了，并且线程池线程数已经达到maximumPoolSize，将执行拒绝策略。
+    任务提交后的流程分析
+    用户通过submit提交一个任务。线程池会执行如下流程:
+
+    判断当前运行的worker数量是否超过corePoolSize,如果不超过corePoolSize。就创建一个worker直接执行该任务。—— 线程池最开始是没有worker在运行的
+    如果正在运行的worker数量超过或者等于corePoolSize,那么就将该任务加入到workQueue队列中去。
+    如果workQueue队列满了,也就是offer方法返回false的话，就检查当前运行的worker数量是否小于maximumPoolSize,如果小于就创建一个worker直接执行该任务。
+    如果当前运行的worker数量是否大于等于maximumPoolSize，那么就执行RejectedExecutionHandler来拒绝这个任务的提交。
+
+17. 线程状态，BLOCKED和WAITING有什么区别
+
+    WAITING状态
+    当前线程调用object.wait方法后，释放对象锁，这个状态就是WAITING状态，线程处于等待队列，等待其他线程同一个对象调用notify或者notifyAll方法。
+
+    BLOCKED状态
+    在调用notify或者notifyAll方法后，调用wait的等待线程不会立刻从等待队列返回，而是从等待队列移动到同步队列，准备竞争对象监视器的这种状态就是BLOCKED，换句话说就是如果同时有不止一个线程竞争对象监视器，那么这种状态就是blocked。
+
+## mysql
 
 索引有什么用？如何建索引？
 
-ArrayList是如何实现的，ArrayList和LinkedList的区别？ArrayList如何实现扩容。
 
-equals方法实现
-
-线程状态，BLOCKED和WAITING有什么区别
-
-JVM GC，GC算法。
-
-什么情况会出现Full GC，什么情况会出现yong GC。
-
-JVM内存模型
-
-CopyOnWriteArrayList实现原理
-
-深克隆和浅克隆
 
 事务隔离级别
 
@@ -28,21 +520,13 @@ CopyOnWriteArrayList实现原理
 
 
 
-技术深度
+HTTP连接池实现原理
 
-LOCK以及syconized的实现区别。
 
-HTTP协议
-
-TCP协议
 
 一致性Hash算法
 
-IO和NIO的区别，NIO优点
-
-Java线程池的实现原理，keepAliveTime等参数的作用。
-
-HTTP连接池实现原理
+雪花算法
 
 
 
