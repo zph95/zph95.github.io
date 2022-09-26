@@ -33,9 +33,9 @@ Github Pages上手简单，成本最低， 配合Typora写markdown刚刚好满�
     
     11. [Validator与全局异常处理](./docs/springboot/11-Validator与全局异常处理.md)
     
-    12. [Git-Commit-Message规范](./docs/springboot/12-Git-Commit-Message规范.md)
+    12. [Git-Commit-Message规范](./docs/git/12-Git-Commit-Message规范.md)
     
-    13. [转载——Git分支设计规范](./docs/springboot/13-Git分支设计规范.md)
+    13. [转载——Git分支设计规范](./docs/git/13-Git分支设计规范.md)
     
     14. [转载——API接口设计规范](./docs/springboot/14-API接口设计规范.md)
     
@@ -44,6 +44,8 @@ Github Pages上手简单，成本最低， 配合Typora写markdown刚刚好满�
     16. [mobaXterm使用记录](docs/linux/01-mobaXterm使用记录.md)
     
     17. [WSL1安装桌面环境](docs/linux/02-WSL安装桌面环境.md)
+
+    18. [git高级命令](docs/git/git高级命令.md)
     
         
     
