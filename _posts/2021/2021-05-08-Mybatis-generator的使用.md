@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "使用过滤器打印Rest接口日志"
+title:  "Mybatis-generator的使用"
 date:   2021-05-08 22:29:36 +0800
 categories: springboot
 typora-root-url: ..

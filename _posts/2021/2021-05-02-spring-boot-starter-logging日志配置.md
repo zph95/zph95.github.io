@@ -110,9 +110,3 @@ public class SpringBootLogTest  extends SpringBootApplicationTests{
 ```
 输出结果:可以看到由于logback中指定了root level="debug",输出了debug及以上级别的日志。不得不说，彩色日志真好看！可惜这个只能在idea的终端中显示颜色，普通的日志文件就不行了。
 ![logging](/assets/images/logging.png)
-
-
-
-* [返回目录](https://zph-programmer.github.io)
-    * [上一篇 —— idea社区版配置和插件](01-idea社区版配置和插件.md)
-    * [下一篇 —— 使用AOP切面打印日志](03-使用AOP切面打印日志.md)
