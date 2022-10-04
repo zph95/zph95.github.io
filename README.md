@@ -10,41 +10,6 @@ Github Pages上手简单，成本最低， 配合Typora写markdown刚刚好满�
 
 
 * [目录](https://zph-programmer.github.io)
-  
-    1. [idea社区版配置和插件](./docs/springboot/01-idea社区版配置和插件.md)
-    
-    2. [spring-boot-starter-logging日志配置](./docs/springboot/02-spring-boot-starter-logging日志配置.md)
-    
-    3. [使用AOP切面打印日志](./docs/springboot/03-使用AOP切面打印日志.md)
-    
-    4. [启用spring-boot-start-cache](./docs/springboot/04-启用spring-boot-start-cache.md)
-    
-    5. [REST接口设计规范](./docs/springboot/05-REST接口规范.md)
-    
-    6. [使用过滤器打印Rest接口日志](./docs/springboot/06-使用过滤器打印Rest接口日志.md)
-    
-    7. [SQLite数据库](./docs/springboot/07-SQLite数据库.md)
-    
-    8. [Mybatis-generator的使用](./docs/springboot/08-Mybatis-generator的使用.md)
-    
-    9. [Springboot使用mybatis连接SQLite](./docs/springboot/09-Springboot使用mybatis连接SQLite.md)
-    
-    10. [Springboot使用security登录](./docs/springboot/10-Springboot使用security登录.md)
-    
-    11. [Validator与全局异常处理](./docs/springboot/11-Validator与全局异常处理.md)
-    
-    12. [Git-Commit-Message规范](./docs/springboot/12-Git-Commit-Message规范.md)
-    
-    13. [转载——Git分支设计规范](./docs/springboot/13-Git分支设计规范.md)
-    
-    14. [转载——API接口设计规范](./docs/springboot/14-API接口设计规范.md)
-    
-    15. [QAPlug-代码检查插件](./docs/springboot/15-QAPlug-代码检查插件.md)
-    
-    16. [mobaXterm使用记录](docs/linux/01-mobaXterm使用记录.md)
-    
-    17. [WSL1安装桌面环境](docs/linux/02-WSL安装桌面环境.md)
-    
         
     
 

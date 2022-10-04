@@ -1,0 +1,6 @@
+
+## ruby
+_site/
+.jekyll-cache/
+Gemifle.lock
+

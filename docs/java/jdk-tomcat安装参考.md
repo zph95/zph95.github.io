@@ -26,7 +26,7 @@ tar -xvf jdk-8u251-linux-x64.tar.gz
 ```
 vim /etc/profile
 添加
-export JAVA_HOME=/usr/jdk1.8.0_251
+export JAVA_HOME=/export/server/jdk1.8.0_251
 export CLASSPATH=$:CLASSPATH:$JAVA_HOME/lib/
 export PATH=$PATH:$JAVA_HOME/bin
 保存
@@ -115,6 +115,7 @@ Xml代码  收藏代码
         所以，如果您要删除，可以先关闭tomcat再删除，这样不会有影响的
 
  
+
 
 
     Tomcat/webapps下的WAR包和同名已解压项目，如何加载？

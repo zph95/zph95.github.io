@@ -198,3 +198,22 @@ JAVA_HOME 是你jdk的安装路径
 \# OS specific support. $var _must_ be set to either true or false.
 export JAVA_OPTS="-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m"
 cygwin=false
+
+### atomikos
+
+在项目中使用atomikos时,如果在同一个环境中部署两个以上这种项目，则可能会报出com.atomikos.icatch.SysException: Error in init(): Log already in use异常，这个信息是因为atomikos在默认情况下是将console_file_name和log_base_name设置为默认值：tm.out和tmlog0.log,并且会将这两个文件上锁，导致其他线程无法访问，所以当多个项目都未指定这一名称时就会出现上述异常信息
+解决办法：
+在每一个项目中都指定atomikos的文件名称，修改jta.properties文件中的
+com.atomikos.icatch.console_file_name
+com.atomikos.icatch.log_base_name
+两个属性的值，保证每个项目的名称都不一样
+例如：
+第一个项目中使用默认值，则自动生成为tm.out、tm.out.lck和tmlog0.log、tmlog.log.lck四个文件；
+第二个项目中在jta.properties文件中指定属性名称：
+com.atomikos.icatch.console_file_name = rm.out
+com.atomikos.icatch.log_base_name = rmlog.log
+启动服务时就会自动生成rm.out、rm.out.lck和rmlog0.log、rmlog.log.lck四个文件；
+这时两个项目使用的文件就不会产生冲突
+问题解决
+-----------
+实际解决办法：另外解压一个tomcat，配置一下就好了。
