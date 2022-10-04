@@ -171,3 +171,17 @@ plugins:
 #   - vendor/ruby/
 ```
 
+## 其它问题
+### Jekyll 运行的时候提示错误 cannot load such file -- webrick (LoadError)
+根据官方的项目的说明：
+
+这是因为：
+从 Ruby 3.0 开始 webrick 已经不在绑定到 Ruby 中了，请参考链接： Ruby 3.0.0 Released 中的说明。
+
+webrick 需要手动进行添加。
+
+添加的命令为：
+```bash
+bundle add webrick
+```
+后就可以解决这个问题了。
