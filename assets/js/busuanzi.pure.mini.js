@@ -41,6 +41,7 @@ bszCaller = {
         scriptTag.type = "text/javascript",
         scriptTag.defer = !0,
         scriptTag.src = a,
+        scriptTag.referrerPolicy = "no-referrer-when-downgrade",
         document.getElementsByTagName("HEAD")[0].appendChild(scriptTag)
     },
     evalCall: function (a) {
@@ -50,13 +51,36 @@ bszCaller = {
                     a(b),
                     scriptTag.parentElement.removeChild(scriptTag)
                 } catch (c) {
-                    bszTag.hides() 
-            } 
-        }) 
-} }},bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback", function (a) {bszTag.texts(a),bszTag.shows()}),bszTag = {bszs: ["site_pv", "page_pv", "site_uv"],texts: function (a) {this.bszs.map(function (b) {
-var c = document.getElementById("busuanzi_value_" + b);
-c && (c.innerHTML = a[b])})},hides: function () {this.bszs.map(function (a) {
-var b = document.getElementById("busuanzi_container_" + a);
-b && (b.style.display = "none")})},shows: function () {this.bszs.map(function (a) {
-var b = document.getElementById("busuanzi_container_" + a);
-b && (b.style.display = "inline")})}};
+                    bszTag.hides()
+                }
+            })
+        }
+    }
+},
+bszCaller.fetch("//busuanzi.ibruce.info/busuanzi?jsonpCallback=BusuanziCallback", function (a) {
+    bszTag.texts(a),
+    bszTag.shows()
+}),
+bszTag = {
+    bszs: [
+        "site_pv", "page_pv", "site_uv"
+    ],
+    texts: function (a) {
+        this.bszs.map(function (b) {
+            var c = document.getElementById("busuanzi_value_" + b);
+            c && (c.innerHTML = a[b])
+        })
+    },
+    hides: function () {
+        this.bszs.map(function (a) {
+            var b = document.getElementById("busuanzi_container_" + a);
+            b && (b.style.display = "none")
+        })
+    },
+    shows: function () {
+        this.bszs.map(function (a) {
+            var b = document.getElementById("busuanzi_container_" + a);
+            b && (b.style.display = "inline")
+        })
+    }
+};
