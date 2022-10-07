@@ -3,6 +3,7 @@ layout: post
 title:  "beautiful-jekyll添加向上箭头"
 date:   2022-10-07 14:30:00 +0800
 categories: js
+tag: js
 ---
 
 ## 参考

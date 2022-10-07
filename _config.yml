@@ -21,10 +21,12 @@ author: Zeno
 
 navbar-links:
   About Me: "aboutme"
+  Tags: "https://zph-programmer.github.io/tags/"
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
   Author's home: "https://zph-programmer.github.io/"
+ 
 
 ################
 # --- Logo --- #
