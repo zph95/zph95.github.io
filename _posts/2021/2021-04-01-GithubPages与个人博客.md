@@ -89,6 +89,8 @@ jekyll-relative-links可以实现生成网页之间通过相对路径跳转，�
 
 ## Github Pages的使用限制
 
+Github Page对jekyll的支持是很到位的, 唯一的不足可能也是其本身基于安全考虑而使得jekyll始终都是运行在safe模式, 目前放开的插件列表非常有限, 所以很多jekyll的插件都无法使用. 
+
 GitHub Pages sites are subject to the following usage limits:
 
 - GitHub Pages source repositories have a recommended limit of 1GB. For more information, see "[What is my disk quota?"](https://docs.github.com/en/articles/what-is-my-disk-quota/#file-and-repository-size-limitations)
@@ -96,5 +98,18 @@ GitHub Pages sites are subject to the following usage limits:
 - GitHub Pages sites have a *soft* bandwidth limit of 100GB per month.
 - GitHub Pages sites have a *soft* limit of 10 builds per hour.
 
+ 
+### jekyll plugin
+ 作为一个流行的静态blog, jekyll的社区和支持者也是非常众多的, 大家可以在github上搜索jekyll就能找到很多jekyll的插件了. 
+
+### 集成plugin的jekyll与github page
+  在github page不支持插件的情况下, 我们该如何选择呢?
+  思路参考：https://taoalpha.github.io/blog/2015/05/29/tech-use-jekyll-plugin-with-github-page/
+
+换: github page主要是因为安全因素而强迫jekyll服务必须在safe下运行, 那么我们换一个服务器的话自然就完全由我们自己可控了, 或者换一个支持jekyll的公共服务即可;
+
+推: github page对jekyll的支持, 本质上还是对静态网页的支持, 所以如果我们在本地编译好jekyll然后把build后的_site文件夹推送到github page上也是肯定可以的;
+
+绕: 如果你觉得每次这么推送比较痛苦, 而且还是想要把jekyll部分的代码也放在github上的话, 那么可以考虑用一个绕一些的办法, 通过github本身支持project page, 结合推的办法, 我们就可以新建一个repo, 然后在master分支管理原始代码, 在gh-pages分支存放生成的site代码. 然后通过xxx.github.io/repo-name来访问了.
 
 
