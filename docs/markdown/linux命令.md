@@ -26,14 +26,6 @@ truncate -s 0 catalina.out
 
 
 
-
-4, 调整分区
-
-sudo deepin-editor /etc/fstab
-
-编辑fstab文件
-
-
 5, windows linux子系统命令
 
 Windows10 20.04开启WSL2并安装Ubuntu20.04 LTS后启动显示　　参考的对象类型不支持尝试的操作的解决方案：
