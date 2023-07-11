@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "Ubuntu下安装jekyll"
 date:   2021-04-02 22:29:36 +0800
 categories: jekyll

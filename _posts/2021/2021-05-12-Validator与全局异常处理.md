@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "Validator与全局异常处理"
 date:   2021-05-11 14:29:36 +0800
 categories: springboot

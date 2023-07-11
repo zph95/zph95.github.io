@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "Mybatis-generator的使用"
 date:   2021-05-08 22:29:36 +0800
 categories: springboot

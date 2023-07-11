@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "spring-boot-starter-logging日志配置"
 date:   2021-05-02 22:29:36 +0800
 categories: springboot

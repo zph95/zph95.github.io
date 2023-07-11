@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "启用spring-boot-start-cache"
 date:   2021-05-04 22:29:36 +0800
 categories: springboot
