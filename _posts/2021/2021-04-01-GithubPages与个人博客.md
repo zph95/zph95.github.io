@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "使用 Githup pages 搭一个博客网站"
 date:   2021-04-01 22:29:36 +0800
 categories: jekyll

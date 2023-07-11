@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "MobaXterm使用记录"
 date:   2021-05-26 22:29:36 +0800
 categories: linux

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "Git-Commit-Message规范"
 date:   2021-05-11 14:29:36 +0800
 categories: git

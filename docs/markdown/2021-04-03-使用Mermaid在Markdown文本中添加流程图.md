@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "使用Mermaid在Markdown文本中添加流程图"
 date:   2021-04-03 22:29:36 +0800
 categories: jekyll
