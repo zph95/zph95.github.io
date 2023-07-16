@@ -1,6 +1,6 @@
 ---
 title:  "samsung dex + termux +code-server"
-date:   2023-07-01 15:04:00 +0800
+date:   2023-07-15 15:04:00 +0800
 tags: 
     - code-server
     - termux
@@ -14,7 +14,7 @@ toc_icon: "cog"
 
 ## samsung dex
 
-Samsung DeX 是通过将智能手机连接到外部显示器 (电视或显示器) 以便为用户提供桌面环境的服务。这项服务可以让您像电脑一样使用您的智能手机，您可以在大屏幕上便捷地使用您的智能手机功能。可以理解为一个Android桌面模式, 手机连上显示器，鼠标，键盘后可以用来轻办公，替代一部分笔记本的功能。 截止2023年7月15日，类似的还有华为手机也可以这样做。
+Samsung DeX 是通过将智能手机连接到外部显示器 (电视或显示器) 以便为用户提供桌面环境的服务。这项服务可以让您像电脑一样使用您的智能手机，您可以在大屏幕上便捷地使用您的智能手机功能。可以理解为一个Android桌面模式, 手机连上显示器，鼠标，键盘后可以用来轻办公，替代一部分笔记本的功能。 截止2023年7月15日，类似的还有华为手机额有桌面模式。
 
 ## termux
 
@@ -71,3 +71,13 @@ cert: false
 Many extensions including language packs fail to install
 Issue: Android is not seen as a Linux environment but as a separate, unsupported platform, so code-server only allows Web Extensions, refusing to download extensions that run on the server.
 Fix: None
+
+#### termux-proot-distro
+
+绕一点的解决方案也是有的，利用[proot-distro](https://github.com/termux/proot-distro)，安装一个接近完全版本的Linux，就可以用Linux版code-server，甚至还可以用vnc开图形界面，除了没有systemctl，services，docker等功能。
+
+性能方面实测：proot<<termux
+
+## 最终效果如下
+
+![code-server on samsung dex termux](code-server-termux.png)
