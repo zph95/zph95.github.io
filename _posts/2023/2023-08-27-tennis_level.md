@@ -9,7 +9,7 @@ toc_label: "Contents Table"
 toc_icon: "cog"
 ---
 
-## tennis
+## tennis level
 
 网球分级标准，参照美国NTRP (NationalTennis Rating Program) 标准，用易于理解的语言表述出来。业余选手一般技术都不够全面，在对照某一级别的描述时，可能出现有的达不到，有的又超出。建议是：用达不到的项数（负值）与超出的项数相加，如果得数不小于“-1”，则可定为该级别；反之，最好先降低0.5级，待有针对性地改进后，再重新评级。
 
