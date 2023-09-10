@@ -1,7 +1,8 @@
 ---
-title:  "jekyll添加动图和音频以及链接视频方式"
+title:  "markdown添加动图和音频以及链接视频方式"
 date:   2023-09-10 11:12:00 +0800
 tags: 
+    - markdown
     - jekyll
     - gitub pages
     - bilibili
@@ -12,9 +13,10 @@ toc_icon: "cog"
 
 ## gif, mp3, bilibili
 
-### gif 
-
 最近目标： 打打球，练练琴，找找工作
+
+
+### gif 
 
 感觉自己再不努力一点就没得救了。
 
