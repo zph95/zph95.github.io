@@ -1,8 +1,9 @@
 # pre
 
 apt install ruby
+apt install bundler
 
-## env 
+## env
 
 $env:JEKYLL_ENV="production"
 or

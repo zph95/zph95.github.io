@@ -1,6 +1,6 @@
 ---
 title:  "use giscus to comments in jekyll"
-date:   2023-11-11 11:12:00 +0800
+date:   2023-11-20 11:12:00 +0800
 tags: 
     - giscus
 toc: true 

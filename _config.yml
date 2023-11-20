@@ -10,7 +10,7 @@
 # Review documentation to determine if you should use `theme` or `remote_theme`
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
-theme                  : "minimal-mistakes-jekyll"
+theme                    : "minimal-mistakes-jekyll"
 # remote_theme           : "mmistakes/minimal-mistakes"
 minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
@@ -18,7 +18,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 locale                   : "zh-CN"
 title                    : "Zeno's Blog"
 title_separator          : "-"
-subtitle                 : "找呀，找呀，找工作。这里正在想找工作的Zeno" # site tagline that appears below site title in masthead
+subtitle                 : "找呀,找呀,找工作。这里正在想找工作的Zeno" # site tagline that appears below site title in masthead
 name                     : "Zeng Penghui"
 description              : "A Freedom Blog."
 url                      : "https://zph-programmer.github.io"# the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
@@ -188,6 +188,7 @@ exclude:
   - Rakefile
   - README
   - tmp
+  - dist
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
 keep_files:
