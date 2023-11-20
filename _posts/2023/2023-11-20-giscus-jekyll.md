@@ -16,10 +16,10 @@ click [giscus](https://giscus.app/zh-CN)
 
 ```html
 <script src="https://giscus.app/client.js"
-        data-repo="zph95/discuss"
-        data-repo-id="R_kgDOKvtBfw"
+        data-repo="zph95/zph95.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkzNzA3MDk2MDE="
         data-category="Announcements"
-        data-category-id="DIC_kwDOKvtBf84CbGC6"
+        data-category-id="DIC_kwDOFhiUYc4CbGKK"
         data-mapping="pathname"
         data-strict="0"
         data-reactions-enabled="1"
@@ -38,7 +38,7 @@ search giscus, and we will notice config.yml and 3 html related: giscus.html , s
 
 ### giscus.html
 
-```html
+```txt
 <script>
   'use strict';
   (function () {
@@ -65,18 +65,16 @@ search giscus, and we will notice config.yml and 3 html related: giscus.html , s
 so we need fill the yml like this:
 
 ```yml
-repository               : "zph95/discuss"
+repository               : "zph95/zph95.github.io"
 
 ...
 
-comments:
-  provider               : "giscus"
-  giscus:
-    repo_id              : "R_kgDOKvtBfw" 
+giscus:
+    repo_id              : "MDEwOlJlcG9zaXRvcnkzNzA3MDk2MDE=" 
     category_name        : "Announcements" 
-    category_id          : "DIC_kwDOKvtBf84CbGC8"
+    category_id          : "DIC_kwDOFhiUYc4CbGKK"
     discussion_term      : "pathname" 
-    reactions_enabled    : 1 
+    reactions_enabled    : '1' 
     theme                : "light" 
 ```
 
@@ -84,7 +82,7 @@ but that is not enougth, if we read the single.html, we will see this:
 
 ### single.html
 
-```html
+```txt
 {% if jekyll.environment == 'production' and site.comments.provider and page.comments %}
       {% include comments.html %}
     {% endif %}
