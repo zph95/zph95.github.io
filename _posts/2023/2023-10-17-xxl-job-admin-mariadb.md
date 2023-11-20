@@ -18,13 +18,13 @@ MariaDB Connector/J is used to connect applications developed in Java to MariaDB
 
 ## 看看两个官网链接
 
-![faq](https://mariadb.com/kb/en/mariadb-faq-mariadb-connectorj/)
+[faq](https://mariadb.com/kb/en/mariadb-faq-mariadb-connectorj/)
 
 We are using MariaDB Connector/J against our production AWS Aurora RDS and noticed that default socketTimeout is set to 10 seconds against Aurora...
 
 We do have transaction layer that times out at 60 seconds. So was thinking to up it to match our higher layer timeout.
 
-![wiki](https://mariadb.com/kb/en/about-mariadb-connector-j/)
+[wiki](https://mariadb.com/kb/en/about-mariadb-connector-j/)
 
 ### socketTimeout
 
@@ -35,7 +35,7 @@ since 1.1.7
 
 ## Mysql
 
-![mysql-connector-j](https://dev.mysql.com/doc/connector-j/8.1/en/connector-j-connp-props-networking.html)
+[mysql-connector-j](https://dev.mysql.com/doc/connector-j/8.1/en/connector-j-connp-props-networking.html)
 
 ### connectTimeout
 
@@ -266,6 +266,3 @@ Caused by: java.sql.SQLException: Lock wait timeout exceeded; try restarting tra
 	at org.mariadb.jdbc.internal.protocol.AbstractQueryProtocol.executeQuery(AbstractQueryProtocol.java:318)
 	... 14 common frames omitted
 ```
-
-
-

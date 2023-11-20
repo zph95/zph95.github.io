@@ -1,7 +1,16 @@
 # pre
 
 apt install ruby
+
+## env 
+
+$env:JEKYLL_ENV="production"
+or
+export JEKYLL_ENV=production
+
 ## build
+
+jekyll build
 
 bundle install
 
