@@ -38,7 +38,8 @@ search giscus, and we will notice config.yml and 3 html related: giscus.html , s
 
 ### giscus.html
 
-```txt
+```
+{% raw  %}
 <script>
   'use strict';
   (function () {
@@ -59,7 +60,9 @@ search giscus, and we will notice config.yml and 3 html related: giscus.html , s
 
     commentContainer.appendChild(script);
   })();
-</script>
+<-/script>
+
+{% endraw %} 
 ```
 
 so we need fill the yml like this:
@@ -82,13 +85,14 @@ but that is not enougth, if we read the single.html, we will see this:
 
 ### single.html
 
-```txt
+```
+{% raw  %}
 {% if jekyll.environment == 'production' and site.comments.provider and page.comments %}
       {% include comments.html %}
-    {% endif %}
+    {% endif %} 
+{% endraw %} 
 ```
-
-## Enable jekyll.environment == 'production'
+so we need Enable jekyll.environment == 'production'!
 
 ### in windows
 
