@@ -11,7 +11,6 @@ toc_icon: "cog"
 
 click [giscus](https://giscus.app/zh-CN)
 
-
 ## the information of my  giscus repo
 
 ```html
@@ -60,7 +59,7 @@ search giscus, and we will notice config.yml and 3 html related: giscus.html , s
 
     commentContainer.appendChild(script);
   })();
-<-/script>
+</script>
 
 {% endraw %} 
 ```
@@ -92,6 +91,7 @@ but that is not enougth, if we read the single.html, we will see this:
     {% endif %} 
 {% endraw %} 
 ```
+
 so we need Enable jekyll.environment == 'production'!
 
 ### in windows
@@ -105,6 +105,7 @@ $env:JEKYLL_ENV="production"
 ```bash
 export JEKYLL_ENV=production
 ```
+
 then
 
 jekyll build
