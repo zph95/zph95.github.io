@@ -1,18 +1,18 @@
 ---
-title:  "use discus to comments in jekyll"
+title:  "use giscus to comments in jekyll"
 date:   2023-11-11 11:12:00 +0800
 tags: 
-    - discus
+    - giscus
 toc: true 
 toc_label: "Contents Table" 
 toc_icon: "cog"
 ---
-## how to use discus? 
+## how to use giscus? 
 
-click [discus](https://giscus.app/zh-CN)
+click [giscus](https://giscus.app/zh-CN)
 
 
-## the information of my  discus repo
+## the information of my  giscus repo
 
 ```html
 <script src="https://giscus.app/client.js"
@@ -32,11 +32,11 @@ click [discus](https://giscus.app/zh-CN)
 </script>
 ```
 
-## use discus in minimal-mistakes-jekyll
+## use giscus in minimal-mistakes-jekyll
 
 search giscus, and we will notice config.yml and 3 html related: giscus.html , script.html, comments.html
 
-###  giscus.html
+### giscus.html
 
 ```html
 <script>
@@ -97,6 +97,7 @@ but that is not enougth, if we read the single.html, we will see this:
 ```powershell
 $env:JEKYLL_ENV="production"
 ```
+
 ### in linux
 
 ```bash
@@ -110,4 +111,4 @@ bundle install
 
 bundle exec jekyll server
 
-we can see the comments
+we can see the comment
