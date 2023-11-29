@@ -12,7 +12,7 @@ toc_icon: "cog"
 ## dubbo admin 
 dubbo-admin的功能挺多，就是服务关系显示的不好看。将力型图改成了环状图, 可高亮和缩放，显示了使用的dubbo版本。fork的分支地址：
 [dubbo-admin_0.5.0](https://github.com/zph95/dubbo-admin)
-![relation](relationV2.png)
+![relation](/assets/images/relationV2.png)
 ## dubbo3.0 注册中心找不到消费者地址原因
 
 ### 注册接口级消费者 

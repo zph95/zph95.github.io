@@ -80,4 +80,4 @@ Fix: None
 
 ## 最终效果如下
 
-![code-server on samsung dex termux](code-server-termux.png)
+![code-server on samsung dex termux](/assets/images/code-server-termux.png)
