@@ -1,6 +1,6 @@
 ---
-title:  "数据库"
-date:   2023-11-28 11:12:00 +0800
+title:  "javaMindMap"
+date:   2023-11-25 11:12:00 +0800
 layout: single
 tags:
     - simpleMindMap
@@ -11,7 +11,7 @@ tags:
   <link rel="stylesheet" href="/assets/js/dist/simpleMindMap.esm.css">
   <script type=module>
   import MindMap from "/assets/js/dist/simpleMindMap.esm.js";
-  import jsData from '/assets/json/database.json' assert {type:'json'};
+  import jsData from '/assets/json/mindMap.json' assert {type:'json'};
   const mindMap = new MindMap({
     el: document.getElementById('mindMapContainer')
   });
@@ -26,12 +26,14 @@ tags:
 </script>
 </head>
 <dody>
-  
+  <p>
+    <a href="https://wanglin2.github.io/mind-map/#/index">思绪思维导图</a>,一个方便好用的思维导图JS库，可以将XMind简单集成blog上。
+  </p>
   <div id="mindMapContainer"></div>
   <style>
     #mindMapContainer {
       width: 100%;
-      height: 1000px;
+      height: 2000px;
     }
 
     #mindMapContainer * {
