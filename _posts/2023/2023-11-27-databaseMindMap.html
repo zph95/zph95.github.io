@@ -1,9 +1,9 @@
 ---
-title:  "数据库"
-date:   2023-11-27 11:12:00 +0800
+title: "数据库"
+date: 2023-11-27 11:12:00 +0800
 layout: single
 tags:
-    - simpleMindMap
+- simpleMindMap
 ---
 
 <head>
@@ -12,8 +12,21 @@ tags:
   <script type=module>
   import MindMap from "/assets/js/dist/simpleMindMap.esm.js";
   import jsData from '/assets/json/database.json' assert {type:'json'};
+  let modal =  document.getElementById("myModal");
   const mindMap = new MindMap({
-    el: document.getElementById('mindMapContainer')
+    el: document.getElementById('mindMapContainer'),
+    customNoteContentShow: {
+      show: (content, left, top) =>{
+        let modalContent =  modal.querySelector("p");
+        modalContent.innerHTML = content;
+        modal.style.display = "block";
+        modal.style.left = left+100;
+        modal.style.top = top+100;
+      },
+      hide: ()=>{
+        //modal.style.display="none";
+      }
+    }
   });
   if(jsData.root){
     mindMap.setFullData(jsData);
@@ -22,13 +35,28 @@ tags:
     mindMap.setData(jsData);
   }
   mindMap.view.reset();
-  
+  // 当用户点击弹窗以外的地方时，也关闭弹窗 
+  window.onclick = function(event) { 
+    if (event.target != modal) {
+       modal.style.display = "none";
+    } 
+  }
+
 </script>
 </head>
-<dody>
-  
-  <div id="mindMapContainer"></div>
-  <style>
+
+<body>
+
+  <div id="mindMapContainer">
+    <!-- 弹窗的HTML -->
+    <div id="myModal" class="modal">
+      <!-- 弹窗内容 -->
+      <p>备注弹窗</p> <!-- 你可以在这里添加更多内容 -->
+    </div>
+  </div>
+
+
+  <style lang="less" scoped>
     #mindMapContainer {
       width: 100%;
       height: 1000px;
@@ -37,6 +65,40 @@ tags:
     #mindMapContainer * {
       margin: 0;
       padding: 0;
+    }
+
+    /* 弹窗的背景 */
+    .modal {
+      display: none;
+      /* 默认隐藏 */
+      position: fixed;
+      /* 固定位置 */
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1;
+      /* 置于顶层 */
+      width: 40%;
+      max-height: 400px;
+      overflow-y: auto;
+
+      /* 如果需要滚动条 */
+      &::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        border-radius: 7px;
+        background-color: rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+      }
+
+      &::-webkit-scrollbar-track {
+        box-shadow: none;
+        background: transparent;
+        display: none;
+      }
     }
   </style>
 </body>
