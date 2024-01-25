@@ -9,7 +9,6 @@ toc: true
 toc_label: "Contents Table" 
 toc_icon: "cog"
 ---
-
 最近发现了一个好玩的东西，利用手机写代码。
 
 ## samsung dex
@@ -31,8 +30,7 @@ Android 12以上的设备只要Termux进后台，运行桌面环境这类占用�
 
 Android手机打开ADB调试
 
-Windows电脑至[Android官网]( https://developer.android.com/studio/releases/platform-tools
-)下载ADB工具。如果没有电脑，可以试试[Termux跑ADB远程调试](https://ivonblog.com/posts/termux-wireless-adb/)
+Windows电脑至[Android官网](https://developer.android.com/studio/releases/platform-tools)下载ADB工具。如果没有电脑，可以试试[Termux跑ADB远程调试](https://ivonblog.com/posts/termux-wireless-adb/)
 
 #### [Check ADB Devices](https://docs.andronix.app/android-12/andronix-on-android-12-and-beyond)
 
@@ -54,7 +52,23 @@ adb shell settings put global settings_enable_monitor_phantom_procs false
 
 ## code-server
 
-vscode的网页版服务，可以通过任何浏览器访问。[termux安装code-server方式](https://coder.com/docs/code-server/latest/termux#installation)
+vscode的网页版服务，可以通过任何浏览器访问。
+
+[termux安装code-server方式](https://coder.com/docs/code-server/latest/termux#installation)
+
+### 问题1：gassip.h not found
+
+```bash
+pkg install krb5
+```
+
+### 问题2： pyt host unknown channel
+
+```bash
+sed -i -e 's|switch(process.platform)|switch("linux")|' /data/data/com.termux/files/usr/lib/node_modules/code-server/lib/vscode/out/vs/platform/terminal/node/ptyHostMain.js
+```
+
+
 安装完成之后可以，通过~/.config/code-server/config.yaml 这个文件修改登陆密码，端口。注意将绑定的IP从127.0.0.1改为0.0.0.0, 这样子手机开热点，其它设备也可以访问手机上运行的code-serve了。
 
 ```yaml
