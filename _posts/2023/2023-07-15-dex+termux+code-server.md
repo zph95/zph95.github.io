@@ -80,11 +80,42 @@ cert: false
 
 试用了，termux版本code-server能用的插件还是太少, 近乎只能用一些基本功能，不过写githup page倒是没有问题。
 
+## 强制是由linux插件
+Create a JS script that patches process.platform:
+
+```JSON
+// android-as-linux.js
+Object.defineProperty(process, "platform", {
+  get() {
+    return "linux"
+  },
+})
+```
+
+Then use Node's --require option to make sure it is loaded before code-server starts:
+```BASH
+NODE_OPTIONS="--require /path/to/android-as-linux.js" code-server
+```
+
+⚠️ Note that Android and Linux are not 100% compatible, so use these workarounds at your own risk. Extensions that have native dependencies other than Node or that directly interact with the OS might cause issues.
+
 ### known issues
 
-Many extensions including language packs fail to install
-Issue: Android is not seen as a Linux environment but as a separate, unsupported platform, so code-server only allows Web Extensions, refusing to download extensions that run on the server.
-Fix: None
+when use cdr/code-server with termux on android.
+search feature is not work because of missing bin/rg
+
+update for fix search feature
+
+
+```bash
+# install ripgrep use pkg
+pkg install ripgrep
+#make a soft link use ln -s
+#run this command in you code-server directory etc: yarn or npm's node_moudles
+
+ln -s $PREFIX/bin/rg ./lib/vscode/node_modules/@vscode/ripgrep/bin/rg
+```
+
 
 #### termux-proot-distro
 
