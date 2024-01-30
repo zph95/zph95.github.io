@@ -68,7 +68,6 @@ pkg install krb5
 sed -i -e 's|switch(process.platform)|switch("linux")|' /data/data/com.termux/files/usr/lib/node_modules/code-server/lib/vscode/out/vs/platform/terminal/node/ptyHostMain.js
 ```
 
-
 安装完成之后可以，通过~/.config/code-server/config.yaml 这个文件修改登陆密码，端口。注意将绑定的IP从127.0.0.1改为0.0.0.0, 这样子手机开热点，其它设备也可以访问手机上运行的code-serve了。
 
 ```yaml
@@ -80,7 +79,8 @@ cert: false
 
 试用了，termux版本code-server能用的插件还是太少, 近乎只能用一些基本功能，不过写githup page倒是没有问题。
 
-## 强制是由linux插件
+## 强制使用linux插件
+
 Create a JS script that patches process.platform:
 
 ```JSON
@@ -93,6 +93,7 @@ Object.defineProperty(process, "platform", {
 ```
 
 Then use Node's --require option to make sure it is loaded before code-server starts:
+
 ```BASH
 NODE_OPTIONS="--require /path/to/android-as-linux.js" code-server
 ```
@@ -106,7 +107,6 @@ search feature is not work because of missing bin/rg
 
 update for fix search feature
 
-
 ```bash
 # install ripgrep use pkg
 pkg install ripgrep
@@ -115,7 +115,6 @@ pkg install ripgrep
 
 ln -s $PREFIX/bin/rg ./lib/vscode/node_modules/@vscode/ripgrep/bin/rg
 ```
-
 
 #### termux-proot-distro
 
